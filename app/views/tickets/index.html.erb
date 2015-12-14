@@ -1,0 +1,8 @@
+<header>
+	<h1> <%= @project.name %> </h1>
+</header>
+<header>
+	<% @tickets.each do |ticket| %>
+	<h4> <%= link_to ticket.name, project_ticket_path(@project, ticket) %> </h4>
+	<% end %>
+</header>

@@ -1,14 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TicketTracker</title>
+  <title><% if content_for?(:title) %>
+  	<%= yield(:title) %>
+  	<% else %>
+  	TicketTracker
+  	<% end %>
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link href='https://fonts.googleapis.com/css?family=Poppins:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Poppins:400,600|Anaheim' rel='stylesheet' type='text/css'>
+  <style>
+	<% State.all.each do |state| %>
+		.state-<%= state.name.parameterize %> {
+		background-color: <%= state.color %>;
+	}
+	<% end %>
+</style>
 </head>
 <body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<div class = "logo">
+					<%= link_to "Ticket Tracker", projects_path, class: "navbar-brand" %>
+				</div>
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="collapse">
+				<ul class="nav navbar-nav">
+					<li class="<%= "active" if current_page?("/") %>">
+					<%= link_to fa_icon("home"), projects_path %>
+					</li>
+					<% admins_only do %>
+					<li>
+						<%= link_to "Admin", admin_root_path %>
+					</li>
+					<% end %>
 
-<%= yield %>
-
+					<% unless user_signed_in? %>
+						<li class = "<%= "active" if current_page?("/users/sign_up") %> ">
+							<%= link_to fa_icon("user-plus"), new_user_registration_path %>
+						</li>
+						<li class = "<%= "active" if current_page?("/users/sign_in") %> ">
+							<%= link_to fa_icon("sign-in"), new_user_session_path %>
+						</li>
+					<% end %>
+				</ul>
+				<% if user_signed_in? %>
+					<div class = "navbar-right">
+						<p class = "navbar-text">
+							Signed is as <%= current_user.email %>
+						</p>
+						<ul class = "nav navbar-nav">
+							<li><%= link_to fa_icon("sign-out"), destroy_user_session_path, method: :delete %>
+							</li>
+						</ul>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</nav>
+	<div class = "container">
+		<% flash.each do |key, message| %>
+			<div class="alert alert-<%= key %>">
+			<%= message %>
+		</div>
+		<% end %>
+		<%= yield %>
+	</div>
 </body>
 </html>

@@ -1,0 +1,91 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+@import "tickets";
+@import "admin/application";
+@import "admin/users";
+@import "responsive";
+@import "projects";
+
+body {
+	padding-top: 70px;
+}
+
+.page-header {
+position: relative;
+padding-bottom: 0px;
+&:first-child {
+margin-top: 20px;
+}
+}
+ul.actions {
+@extend .list-unstyled;
+@extend .list-inline;
+display: inline-block;
+}
+ul.actions li {
+	margin-bottom: 5px;
+}
+
+a.new, a.edit, a.delete , a.show{
+@extend .btn;
+&:before {
+font-family: "FontAwesome";
+padding-right: 0.5em;
+}
+}
+a.new {
+@extend .btn-success;
+&:before {
+@extend .fa-plus-square;
+}
+}
+a.edit {
+@extend .btn-primary;
+&:before {
+@extend .fa-pencil;
+}
+}
+a.delete {
+@extend .btn-danger;
+&:before {
+@extend .fa-trash;
+}
+}
+a.show {
+@extend .btn-info;
+&:before {
+@extend .fa-expand;
+}
+}
+
+header {
+@extend .page-header;
+position: relative;
+padding-bottom: 0px;
+&:first-child {
+margin-top: 20px;
+font-family: 'Anaheim', sans-serif;
+}
+}
+#projects h2 {
+font-size: 16px;
+font-weight: bold;
+margin: 20px 0px 0px;
+font-family: 'Anaheim', sans-serif;
+}
+#projects p{
+font-family: 'Anaheim', sans-serif;
+}
+.alert{
+margin-top:10px;
+}
+.alert-notice {
+@extend .alert-success;
+}
+.alert-alert {
+@extend .alert-danger;
+}
+.logo{
+	font-family: 'Poppins', sans-serif;
+}
